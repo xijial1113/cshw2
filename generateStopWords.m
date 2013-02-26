@@ -1,6 +1,6 @@
 % stop words from http://www.tomdiethe.com/teaching/remove_stopwords.m
 
-load('data/smap.mat')
+load('smap.mat')
 
 stopWords = textread('stopwords_english.txt', '%s')
 numStopWords = length(stopWords)
@@ -16,4 +16,4 @@ for i = 1 : numStopWords
     stopWords{i}
 end
 
-save('data/stopwords.mat', 'stopWords', 'stopWordIndexes')
+save('stopwords.mat', 'stopWords', 'stopWordIndexes')
