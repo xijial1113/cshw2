@@ -14,3 +14,6 @@ display('finished saving smap.mat')
 tokens =tokens(3,:);
 save('-v7.3', 'tokens.mat', 'tokens')
 display('finished saving tokens.mat')
+
+tokenstest = tokens(1:5000);
+save('-v7.3', 'tokenstest.mat','tokenstest')
