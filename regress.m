@@ -56,22 +56,24 @@ for i = 1 : numReviews
                          reviewTextEndPositions(i));
     
     % skip the review if it has been observed before.
-    hashkey = mat2str(reviewTexts(1 : min(10, end)));
+    hashkey = mat2str(reviewTexts(1 : min(10, length(reviewTexts))));
     if ~isKey(map, hashkey)
         map(hashkey) = true;
         uniqueReviews(uniqueReviewsIndex) = i;
         uniqueReviewsIndex = uniqueReviewsIndex +1;
+        reviewTextsMod = reviewTexts(reviewTexts<=dictSize);
+        
         % stop words
-        reviewStopWords = double(setdiff(reviewTexts, stopWordIndexes));
+        reviewStopWords = double(setdiff(reviewTextsMod, stopWordIndexes));
         
         % stemming
-        textLen = length(reviewTexts);
+        textLen = length(reviewTextsMod);
         reviewStemmed = ones(textLen);
         for j = 1 : textLen
-            reviewStemmed(j) = smapToUniq(reviewTexts(j));
+            reviewStemmed(j) = smapToUniq(reviewTextsMod(j));
         end
         
-        Xdefault(:, i) = [1; sparse(double(reviewTexts), 1, 1, ...
+        Xdefault(:, i) = [1; sparse(double(reviewTextsMod), 1, 1, ...
             dictSize, 1)];
         Xstemmed(:, i) = [1; sparse(double(reviewStemmed), 1, 1, ...
             dictSize, 1)];
@@ -91,13 +93,13 @@ yuniq = y(uniqueReviews);
 
 
 Xuniq = Xdefault(:, uniqueReviews);
-save('data/model-default.mat', 'Xuniq', 'yuniq');
+save('model-default.mat', 'Xuniq', 'yuniq');
 
 Xuniq = Xstemmed(:, uniqueReviews);
-save('data/model-stemmed.mat', 'Xuniq', 'yuniq');
+save('model-stemmed.mat', 'Xuniq', 'yuniq');
 
 Xuniq = Xstopwords(:, uniqueReviews);
-save('data/model-stopwords.mat', 'Xuniq', 'yuniq');
+save('model-stopwords.mat', 'Xuniq', 'yuniq');
 
 
 
