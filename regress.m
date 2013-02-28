@@ -8,19 +8,19 @@
 % - smap
 %load('data/tokenized.mat')
 
-%load('tokens.mat','tokens');
-load('tokenstest.mat', 'tokenstest');
+load('tokens.mat','tokens');
+%load('tokenstest.mat', 'tokenstest');
 %load('scnt.mat', 'scnt');
 load('smap.mat', 'smap');
 
 load('stopwords.mat', 'stopWordIndexes');
 load('stemmedSmap.mat', 'smapUnique', 'uniqToSmap',...
      'smapToUniq', 'stemmedSmap');
-
+lenTokens = length(tokens);
 dictSize = length(smap);
 %dictSize = 1796312;
 %!!! get a subset of tokens!!!%
-tokens = tokenstest;
+tokens = tokens(1:lenTokens/10);
 % tokens is a 3xN matrix, but the first two rows are useless.
 % Get rid of the first two rows.
 % This should reduce the amount of memory required significantly.
